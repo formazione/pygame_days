@@ -13,13 +13,22 @@ https://github.com/formazione/pygame_days
 6 https://youtu.be/UaPjKtuQyfA Enemy AI 2
 7 https://youtu.be/ZuEc6gncGNs Images, movements
 8 https://youtu.be/wobJoDgI0LQ Bullet 1
+
+https://youtu.be/wAKLVFMb7eE
+https://youtu.be/rsBJgWqsoa4
+https://youtu.be/J3k4-tqy_kM
+https://youtu.be/vwYu9Eel9QM
+https://youtu.be/UaPjKtuQyfA
+https://youtu.be/ZuEc6gncGNs
+https://youtu.be/wobJoDgI0LQ
+
 '''
 
 def show_fps():
 	''' shows the frame rate on the screen '''
 	fps_text = str(int(clock.get_fps())) # get the clocl'fps
 	# render a text surface
-	fps_text += f" enemy y:{enemy.y} - player y:{player.y}"
+	fps_text += f" {enemy.x=} {enemy.y=}"
 	fps_surface = fps_font.render(fps_text, 1, pygame.Color("white"))
 	# blit the text surface on the backgroud
 	screen.blit(fps_surface, (0, 0))
@@ -138,36 +147,65 @@ class Enemy(Sprite):
 		self.rect = self.image.get_rect()
 		self.rect[0] = x
 		self.rect[1] = y
+		self.border = 0
+		self.speed = 1 # day 9 (1)
 
 	def move_ai(self):
 
-		# ESCAPE TO THE RIGHT ===========================
-		if self.x < 550  and self.x > 0:
-			# it will escape from right if the player is more to left
-			if player.x < self.x:
-				self.x += 3
-			elif player.x > self.x:
-				self.x -= 3
-			else:
-				if random.random() > 0.5:
-					self.x += 3
-				else:
-					self.x -=3
+		if self.border == 0: # day 9 (2)
 
-		if self.y < 350 and self.y > 0:
-			if player.y < self.y:
-				self.y += 3
-			elif player.y > self.y:
-				self.y -= 3
-			if random.random() > 0.5:
-				self.y += 3
-			else:
-				self.y -= 3
+			# ESCAPE HORIZONTALLY
+			if self.x < 550  and self.x > 0:
+				# it will escape from right if the player is more to left
+				if player.x < self.x:
+					self.x += self.speed # day 9 (3) 
+				elif player.x > self.x:
+					self.x -= self.speed # day 9 (3) 
+				else:
+					if random.random() > 0.5:
+						self.x += self.speed # day 9 (3) 
+					else:
+						self.x -=self.speed # day 9 (3) 
+
+			# ESCAPE VERTICALLY
+			if self.y < 350 and self.y > 0:
+				if player.y < self.y:
+					self.y += self.speed # day 9 (3) 
+				elif player.y > self.y:
+					self.y -= self.speed # day 9 (3) 
+				if random.random() > 0.5:
+					self.y += self.speed # day 9 (3) 
+				else:
+					self.y -= self.speed # day 9 (3) 
+
+		# day 9 (4) - new AI: when reaches border, changes behaviour
+
+		if (-4 <= self.y <= 0) or \
+			(-4 <= self.x <= 4) or \
+			(350 <= self.y <= 355) or \
+			(550 <= self.x <= 555):
+			self.border = 1
+			self.respawn()
+
+		# === end day 9 - New AI
+
+	def show_text(self):
+		''' shows informations about enemy '''
+		fps_text = f" {enemy.x=} {enemy.y=} {enemy.border=}"
+		fps_surface = fps_font.render(fps_text, 1, pygame.Color("white"))
+		# blit the text surface on the backgroud
+		screen.blit(fps_surface, (300, 0))
 
 	def respawn(self):
 		self.x = random.randrange(0, 580)
 		self.y = random.randrange(0, 380)
+		self.border = 0
 
+	def draw(self):
+		self.rect[0] = self.x
+		self.rect[1] = self.y
+		self.show_text()
+		screen.blit(self.image, (self.x,self.y))
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))

@@ -2,17 +2,20 @@ import pygame
 import random
 
 '''
-https://pythonprogramming.altervista.org
-Github repository with the codel (001.py)
-https://github.com/formazione/pygame_days
+<a href="https://pythonprogramming.altervista.org">Repository</a><br>
+Github repository with the codel (001.py)<br>
+<a href="https://github.com/formazione/pygame_days">Repository</a><br>
 
-1 https://youtu.be/wAKLVFMb7eE Move Sprite
-2 https://youtu.be/rsBJgWqsoa4 collisions
-3 https://youtu.be/J3k4-tqy_kM Ai enemy 1
-4 https://youtu.be/vwYu9Eel9QM frame rate
-6 https://youtu.be/UaPjKtuQyfA Enemy AI 2
-7 https://youtu.be/ZuEc6gncGNs Images, movements
-8 https://youtu.be/wobJoDgI0LQ Bullet 1
+1 <a href="https://youtu.be/wAKLVFMb7eE">Move Sprite</a><br>
+2 <a href="https://youtu.be/rsBJgWqsoa4">collisions</a><br>
+3 <a href="https://youtu.be/J3k4-tqy_kM">Ai enemy 1</a><br>
+4 <a href="https://youtu.be/vwYu9Eel9QM">frame rate</a><br>
+6 <a href="https://youtu.be/UaPjKtuQyfA">Enemy AI 2</a><br>
+7 <a href="https://youtu.be/ZuEc6gncGNs">Images, movements</a><br>
+8 <a href="https://youtu.be/wobJoDgI0LQ">Bullet 1</a><br>
+9 <a href="https://youtu.be/4GjllooYXAI">AI 3, images</a><br>
+
+
 '''
 
 def show_fps():
@@ -52,12 +55,16 @@ class Screen:
 				# left = 0, right = 2, up = 1, down =3
 				if event.key == pygame.K_LEFT:
 					player.left = 1
+					player.image = player.imagel
 				if event.key == pygame.K_RIGHT:
 					player.right = 1
+					player.image = player.imager
 				if event.key == pygame.K_UP:
 					player.up = 1
+					player.image = player.imageu
 				if event.key == pygame.K_DOWN:
 					player.down = 1
+					player.image = player.imaged
 
 			# when you release the key player stops
 			if event.type == pygame.KEYUP:
@@ -102,6 +109,10 @@ class Player(Sprite):
 		self.x = x
 		self.y = y
 		self.image = pygame.image.load("img/player.png").convert()
+		self.imageu = pygame.image.load("img/player1.png").convert()
+		self.imager = pygame.image.load("img/player2.png").convert()
+		self.imaged = pygame.image.load("img/player3.png").convert()
+		self.imagel = pygame.image.load("img/player4.png").convert()
 		self.rect = self.image.get_rect()
 
 class Bullet():
@@ -138,39 +149,55 @@ class Enemy(Sprite):
 		self.rect = self.image.get_rect()
 		self.rect[0] = x
 		self.rect[1] = y
+		self.border = 0
 
 	def move_ai(self):
 
-		# ESCAPE TO THE RIGHT ===========================
-		if self.x < 550  and self.x > 0:
-			# it will escape from right if the player is more to left
-			if player.x < self.x:
-				self.x += 3
-			elif player.x > self.x:
-				self.x -= 3
-			else:
-				if random.random() > 0.5:
-					self.x += 3
-				else:
-					self.x -=3
 
-		if self.y < 350 and self.y > 0:
-			if player.y < self.y:
-				self.y += 3
-			elif player.y > self.y:
-				self.y -= 3
-			if random.random() > 0.5:
-				self.y += 3
-			else:
-				self.y -= 3
+		if self.border == 0:
+
+			# ESCAPE HORIZZONTALLY
+			if self.x < 550  and self.x > 0:
+				# it will escape from right if the player is more to left
+				if player.x < self.x:
+					self.x += 3
+				elif player.x > self.x:
+					self.x -= 3
+				else:
+					if random.random() > 0.5:
+						self.x += 3
+					else:
+						self.x -=3
+
+			# ESCAPE VERTICALLY
+			if self.y < 350 and self.y > 0:
+				if player.y < self.y:
+					self.y += 3
+				elif player.y > self.y:
+					self.y -= 3
+				if random.random() > 0.5:
+					self.y += 3
+				else:
+					self.y -= 3
+
+
+		if (-4 <= self.y <= 4) or \
+			(-4 <= self.x <= 4) or \
+			(545 <= self.x <= 555) or \
+			(345 <= self.y <= 355):
+				self.border = 1
+				self.respawn()
+
+
 
 	def respawn(self):
 		self.x = random.randrange(0, 580)
 		self.y = random.randrange(0, 380)
+		self.border = 0
 
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((600, 400))
 clock = pygame.time.Clock()
 # white surface on which we show the frame rate
 fps_font = pygame.font.SysFont("Arial", 20) # a font for the fps
