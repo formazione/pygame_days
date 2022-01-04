@@ -7,19 +7,15 @@ Repository with the code to make a game with pygame
 https://github.com/formazione/pygame_days
 Post and videos
 
-Day 1: how to move a sprite with pygame
-Post: https://pythonprogramming.altervista.org/live-coding-15-minutes-of-pygame-day-1/
-Video: https://youtu.be/wAKLVFMb7eE
+https://pythonprogramming.altervista.org
+Github repository with the codel (001.py)
+https://github.com/formazione/pygame_days
 
-Day 2: how to handle collisions with pygame
-Post: https://pythonprogramming.altervista.org/pygame-day-2-how-to-handle-sprite-collisions/
-Video: https://youtu.be/rsBJgWqsoa4
-
-day 3, 4, 5, 6
-Progress, frame rate, animations. The code progress from 3 to 6, while 4 and 5 are a little disconnected.
-
-day 7
-Better movements, some class redefinitions, images instead of square surfaces
-
-day 8
-A bullet sprite for the enemy that points to the player, part 1
+1 https://youtu.be/wAKLVFMb7eE Move Sprite
+2 https://youtu.be/rsBJgWqsoa4 collisions
+3 https://youtu.be/J3k4-tqy_kM Ai enemy 1
+4 https://youtu.be/vwYu9Eel9QM frame rate
+6 https://youtu.be/UaPjKtuQyfA Enemy AI 2
+7 https://youtu.be/ZuEc6gncGNs Images, movements
+8 https://youtu.be/wobJoDgI0LQ Bullet 1
+9 https://youtu.be/4GjllooYXAI AI 3, images
