@@ -4,7 +4,7 @@ Not very well organized, but I will try to make a better job from day 8.
 
 
 Repository with the code to make a game with pygame
-https://github.com/formazione/pygame_live
+https://github.com/formazione/pygame_days
 Post and videos
 
 Day 1: how to move a sprite with pygame
